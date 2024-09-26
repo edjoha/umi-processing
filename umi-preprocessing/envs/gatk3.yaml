@@ -1,0 +1,6 @@
+name: gatk4
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - gatk=3.8=hdfd78af_11

@@ -3,9 +3,10 @@
 #                     containing unique molecular identifiers (UMIs)
 #
 # Author: Raphael Hablesreiter (raphael.hablesreiter@charite.de)
+# modified by Hanna Edler, 04-09-2024
 #
 # Description:
-# Snakemake implementation of IDT analysis guidlines "Demultiplexing Illumina 
+# Snakemake implementation of IDT analysis guidelines "Demultiplexing Illumina 
 # sequencing data containing unique molecular identifiers (UMIs)".
 # ==============================================================================
 
@@ -19,7 +20,7 @@ from snakemake.utils import min_version
 
 min_version("5.7.1")
 
-configfile: "../config/config1686.yaml"
+configfile: "../config/HannaTest/config_HannaTest.yaml"
 validate(config, schema="schemas/config.schema.yaml")
 
 SAMPLES = os.listdir(config["general"]["work_dir"] + "/demux/unmapped/")

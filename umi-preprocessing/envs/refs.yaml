@@ -1,0 +1,6 @@
+name: refs
+channels:
+  - bioconda
+dependencies:
+  - samtools=1.6
+  - tabix=1.11

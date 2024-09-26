@@ -6,6 +6,7 @@ rule get_refs:
         genome="refs/genome.fasta",
         known_indels="refs/known_indels.vcf.gz",
         index="refs/known_indels.vcf.gz.tbi"
+    conda: "../envs/refs.yaml"
     resources:
         mem_mb="2G",
         time="01:00:00"
@@ -28,13 +29,14 @@ rule samtools_faidx:
         mem_mb="2G",
         time="01:00:00"
     wrapper:
-        "v1.0.0/bio/samtools/faidx"
+        "v4.3.0/bio/samtools/faidx"
 
 rule query_bam_sort:
     input:
         "{file}.bam"
     output:
         "{file}_qsorted.bam"
+    conda: "../envs/mapping.yaml"
     resources:
         mem_mb="20G",
         time="00:30:00"
@@ -52,6 +54,7 @@ rule coordinate_bam_sort:
         "{file}.bam"
     output:
         "{file}_csorted.bam"
+    conda: "../envs/mapping.yaml"
     resources:
         mem_mb="20G",
         time="00:30:00"

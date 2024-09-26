@@ -7,6 +7,8 @@ rule map_reads1:
         bwaindex=multiext("refs/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa")
     output:
         temp("mapped/{sample}.woconsensus.bam")
+    conda:
+        "../envs/mapping.yaml"
     params:
         musage=config["picard"]["memoryusage"],
         temp_file = temp("mapped/{sample}.temp.bam")
@@ -19,7 +21,7 @@ rule map_reads1:
         time="20:00:00"
     shell:
         """
-        picard {params.musage} SamToFastq I={input.unmapped} F=/dev/stdout INTERLEAVE=true \
+        picard {params.musage} SamToFastq -I {input.unmapped} -F /dev/stdout -INTERLEAVE true \
         | bwa mem -p -t 8 {input.genome} /dev/stdin \
         | picard {params.musage} MergeBamAlignment \
         UNMAPPED={input.unmapped} ALIGNED=/dev/stdin O={output} R={input.genome} \
@@ -71,6 +73,8 @@ rule map_reads2:
         bwaindex=multiext("refs/genome.fasta", ".amb", ".ann", ".bwt", ".pac", ".sa")
     output:
         "mapped/{sample}.consensusreads.bam"
+    conda:
+        "../envs/mapping.yaml"
     params:
         musage=config["picard"]["memoryusage"],
     log:
@@ -83,7 +87,7 @@ rule map_reads2:
         time="02:00:00"
     shell:
         r"""
-        picard {params.musage} SamToFastq I={input.unmapped} F=/dev/stdout INTERLEAVE=true \
+        picard {params.musage} SamToFastq -I {input.unmapped} -F /dev/stdout -INTERLEAVE true \
         | bwa mem -p -t 8 {input.genome} /dev/stdin \
         | picard {params.musage} MergeBamAlignment \
         UNMAPPED={input.unmapped} ALIGNED=/dev/stdin O={output} R={input.genome} \
@@ -95,6 +99,7 @@ rule FilterConsensusReads:
         "mapped/{sample}.consensusreads.bam"
     output:
         "mapped/{sample}.filtered.bam"
+    conda: "../envs/fgbio.yaml"
     params:
         extra=config["fgbio"]["fextra"],
         min_base_quality=config["fgbio"]["fminq"],
@@ -127,6 +132,7 @@ rule realignertargetcreator:
         known="refs/known_indels.vcf.gz"
     output:
         "realigned/{sample}.intervals"
+    conda: "../envs/gatk3.yaml"
     log:
         "logs/gatk/realignertargetcreator/{sample}.log"
     params:
@@ -153,6 +159,7 @@ rule indelrealigner:
         target_intervals="realigned/{sample}.intervals"
     output:
         bam="mapped/{sample}.realigned.bam"
+    conda: "../envs/gatk3.yaml"
     log:
         "logs/gatk3/indelrealigner/{sample}.log"
     params:
