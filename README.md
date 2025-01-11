@@ -1,11 +1,17 @@
 - build by Raphael Hablesreiter & Robert Altwasser
+- modified by Hanna Edler
+
+Latest release v2.3, published on Jan 11, 2025
+
+[DOI
+10.5281/zenodo.14632260](https://doi.org/10.5281/zenodo.14632260)
 
 # Demultiplexing
 
 ## Sample sheet
 
-To demultiplex Illumina basecalls into different samples, `bcl2fastq` can be used ([>LINK<](https://emea.support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html)). It has to be executed in the base directory of the sequencing run (the one with the `RunInfo.xml` in it). A `SampleSheet.csv` has to be created containing the (7') barcode indexes for each sample. If UMIs are present, their length can be given in sample sheet.
-For the demultiplexing to run, we need a sample sheet. A template can be downloaded here [>LINK<](https://sapac.support.illumina.com/downloads/sample-sheet-v2-template.html)
+To demultiplex Illumina basecalls into different samples, [`bcl2fastq`](https://emea.support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html) can be used. It has to be executed in the base directory of the sequencing run (the one with the `RunInfo.xml` in it). A `SampleSheet.csv` has to be created containing the (7') barcode indexes for each sample. If UMIs are present, their length can be given in sample sheet.
+For the demultiplexing to run, we need a sample sheet. A template can be downloaded [here](https://sapac.support.illumina.com/downloads/sample-sheet-v2-template.html).
 
 Let's say the *Project Registration* form has the following format:
 
@@ -36,7 +42,7 @@ Lane,Sample_ID,Sample_Name,index,index2
 ```
 - The information for the [Reads] section can be found in the *project_registration_form* or *RunInfo.xml*
 - Please note the *NNNNNNNNN* in the I7_Index are removed
-- the *index2*, which holds the I5_Index is ***reverse complement!***. This can be done using this link [>LINK<](https://arep.med.harvard.edu/labgc/adnan/projects/Utilities/revcomp.html)
+- the *index2*, which holds the I5_Index is ***reverse complement!***. This can be done using [this link](https://arep.med.harvard.edu/labgc/adnan/projects/Utilities/revcomp.html).
 
 ## config file
 
