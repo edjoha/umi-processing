@@ -3,8 +3,7 @@
 
 Latest release v2.3, published on Jan 11, 2025
 
-[DOI
-10.5281/zenodo.14632260](https://doi.org/10.5281/zenodo.14632260)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14632260.svg)](https://doi.org/10.5281/zenodo.14632260)
 
 # Demultiplexing
 
