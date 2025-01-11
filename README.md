@@ -21,7 +21,7 @@ Only Snakemake ([v8.10](https://snakemake.readthedocs.io/en/v8.10.0/)) needs to 
 
 # Configuration files
 
-Configuration files are a [samplesheet.csv](##Samplesheet) and a [config.yaml](##configfile). Templates are here `templates/`.
+Configuration files are a [samplesheet.csv](https://github.com/edjoha/umi-processing/blob/main/README.md#samplesheet) and a [config.yaml](https://github.com/edjoha/umi-processing/blob/main/README.md#configfile). Templates are here `templates/`.
 
 ## Samplesheet
 
