@@ -133,6 +133,7 @@ This is the structure of the Preprocessing part of the pipeline:
     - genome aligners can only consider each read independently
     - local realignment considers all reads spanning a given position
         - parsimonious alignment of reads
+     
             ![indels_realign.png](images/realign.png)
             ![indels_realign_2.png](images/realign_2.png)
 
@@ -188,12 +189,12 @@ This is the structure of the Variant calling part of the pipeline:
 If there are different target files for the samples of the analysis, I recommend the following workflow:
 
 1. demultiplex all files together
-    - snakemake target `"qc/multiqc_reads.html"`
+    - snakemake target `"qc/multiqc.html"`
 2. set desired target file in config (`region_file`)
 3. only leave samples belonging to this target file in the sample sheet
 4. run analysis till variant calling 
     - snakemake target `expand("vardict/{sample}.vcf", sample = SAMPLES)`
-5. move/rename file `qc/multiqc_alignment.html` since it will be overwritten
+5. move/rename file `qc/multiqc.html` since it will be overwritten
 6. remove file `refs/region.intervals`!
 7. repeat 2-6 with other target file
 8. add all samples again to sample sheet
