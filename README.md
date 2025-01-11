@@ -113,8 +113,6 @@ This is the structure of the Preprocessing part of the pipeline:
 
 ![png](umi-preprocessing/241225_preprocess_dag.png)
 
-![rule_prep_filtered.svg](images/umi_prep.svg)
-
 1.  **map_reads1a,b,c**: The BAM files are converted to FASTQ, and then the FASTQ files are mapped to the genome. [BWA-MEM2](https://github.com/bwa-mem2/bwa-mem2) is used for alignment.
 
 2.  **replace_rg1a,b**: BWA-MEM2 modifies the bam header in an unexpected way. RG header needs to be replaced.
