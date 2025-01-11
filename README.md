@@ -19,13 +19,11 @@ We used the [Miniforge](https://github.com/conda-forge/miniforge) installer for 
 
 Only Snakemake ([v8.10](https://snakemake.readthedocs.io/en/v8.10.0/)) needs to be installed in a new Conda environment. All other packages needed, get installed by Snakemake automatically when running the pipeline for the first time (`snakemake -p --use-conda --conda-frontend mamba --conda-prefix --workflow-profile=my_profile --jobs --cores`). It is recommended to define a common directory for all Conda environments of this pipeline `--conda-prefix`.
 
-# Demultiplexing
+# Configuration files
 
-This is the structure of the Demultiplexing part of the pipeline:
+Configuration files are a [samplesheet.csv](##Samplesheet) and a [config.yaml](##configfile). Templates are here `templates/`.
 
-![png](umi-demultiplex/241214_demux_dag.png)
-
-## Sample sheet
+## Samplesheet
 
 To demultiplex Illumina basecalls into different samples, [`bcl2fastq`](https://emea.support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html) can be used. It has to be executed in the base directory of the sequencing run (the one with the `RunInfo.xml` in it). A `SampleSheet.csv` has to be created containing the (7') barcode indexes for each sample. If UMIs are present, their length can be given in sample sheet.
 For the demultiplexing to run, we need a sample sheet. A template can be downloaded [here](https://sapac.support.illumina.com/downloads/sample-sheet-v2-template.html).
@@ -57,11 +55,12 @@ Lane,Sample_ID,Sample_Name,index,index2
 1,S-BeLOV-248164,S-BeLOV-248164,CTGATCGT,GCGCATAT
 2,S-BeLOV-248536,S-BeLOV-248536,ACTCTCGA,CTGTACCA
 ```
+
 - The information for the [Reads] section can be found in the *project_registration_form* or *RunInfo.xml*
 - Please note the *NNNNNNNNN* in the I7_Index are removed
 - the *index2*, which holds the I5_Index is ***reverse complement!***. This can be done using [this link](https://arep.med.harvard.edu/labgc/adnan/projects/Utilities/revcomp.html).
 
-## config file
+## configfile
 
 This file has to give the paths to different annotation files. Especially important are
 
@@ -85,7 +84,6 @@ The *readstructure* tells the demultiplexer which part of the reads is an adapte
 <Read Number="3" NumCycles="8" IsIndexedRead="Y"/>
 <Read Number="4" NumCycles="148" IsIndexedRead="N"/>
 ```
-
 Means (in `bcl2fastq` syntax):
 
 ```
@@ -102,6 +100,12 @@ If you have no information, one can also just convert the entire sequences to fa
 ```
 picard  IlluminaBasecallsToFastq B=./{MY_RUN}/Data/Intensities/BaseCalls/ L=1 RS=148T INCLUDE_NON_PF_READS=false COMPRESS_OUTPUTS=false RUN_BARCODE=MY_RUN OUTPUT_PREFIX=MY_RUN READ_NAME_FORMAT=ILLUMINA  NUM_PROCESSORS=1 IGNORE_UNEXPECTED_BARCODES=false FORCE_GC=false
 ```
+
+# Demultiplexing
+
+This is the structure of the Demultiplexing part of the pipeline:
+
+![png](umi-demultiplex/241214_demux_dag.png)
 
 # Preprocessing
 
