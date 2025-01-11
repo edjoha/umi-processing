@@ -2,8 +2,8 @@
 # Snakemake workflow: Demultiplexing of Illumina sequencing data 
 #                     containing unique molecular identifiers (UMIs)
 #
-# Author: Robert Altwasser (robert.altwasser@charite.de)
-#         Raphael Hablesreiter (raphael.hablesreiter@charite.de)
+# Author: Raphael Hablesreiter (raphael.hablesreiter@charite.de)
+#         Robert Altwasser (robert.altwasser@charite.de
 #
 # Description:
 # Snakemake implementation of IDT analysis guidlines "Demultiplexing Illumina 
@@ -20,9 +20,9 @@ import glob
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
-min_version("5.7.1")
+min_version("8.10")
 
-configfile: "../config/config3228.yaml"
+configfile: "../config/P3471/configP3471.yaml"
 # validate(config, schema="schemas/config.schema.yaml")
 
 workdir: config["general"]["work_dir"] + "demux/"
@@ -34,11 +34,12 @@ SAMPLES = list(df.iloc[:,1])
 # print(SAMPLES)
 rule all:
     input:
-        expand("unmapped/{sample}.unmapped.bam", sample=SAMPLES),
+        "logs/save/demux/done.txt"
 
 # ==============================================================================
 # Include rules
 # ==============================================================================
 
+include: "rules/resources.smk"
 include: "rules/demux.smk"
 

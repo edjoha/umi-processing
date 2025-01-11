@@ -1,7 +1,8 @@
+name: picard
 channels:
   - conda-forge
   - bioconda
 dependencies:
-  - bwa=0.7.17
-  - samtools=1.9
-  - picard=2.20.0
+  - picard=3.3.0
+#  - picard=2.26.11
+#  - bwa=0.7.17

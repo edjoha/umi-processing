@@ -1,0 +1,5 @@
+name: mawk
+channels:
+  - bioconda
+dependencies:
+  - mawk

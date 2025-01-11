@@ -1,0 +1,6 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - fgbio=2.4.0
+#  - fgbio=2.0.1=hdfd78af_0

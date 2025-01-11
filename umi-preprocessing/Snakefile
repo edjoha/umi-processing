@@ -2,11 +2,11 @@
 # Snakemake workflow: Preprocessing of Illumina sequencing data 
 #                     containing unique molecular identifiers (UMIs)
 #
-# Author: Robert Altwasser (robert.altwasser@charite.de)
-#         Raphael Hablesreiter (raphael.hablesreiter@charite.de)
+# Author: Raphael Hablesreiter (raphael.hablesreiter@charite.de)
+# modified by Hanna Edler, 04-09-2024
 #
 # Description:
-# Snakemake implementation of IDT analysis guidlines "Demultiplexing Illumina 
+# Snakemake implementation of IDT analysis guidelines "Demultiplexing Illumina 
 # sequencing data containing unique molecular identifiers (UMIs)".
 # ==============================================================================
 
@@ -18,14 +18,15 @@ import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
-min_version("5.7.1")
+min_version("8.10")
 
-configfile: "../config/config1413_belove.yaml"
+configfile: "../config/P3471/configP3471.yaml"
 validate(config, schema="schemas/config.schema.yaml")
 
 SAMPLES = os.listdir(config["general"]["work_dir"] + "/demux/unmapped/")
 SAMPLES = list(filter(lambda x:'.unmapped.bam' in x, SAMPLES))
 SAMPLES = [s.replace('.unmapped.bam', '') for s in SAMPLES]
+print(SAMPLES) #can cause problems when visualizing the DAG with dot; simply comment out
 
 workdir: config["general"]["work_dir"] + "/demux/"
 
@@ -44,7 +45,4 @@ include: "rules/tools.smk"
 
 rule all:
     input:
-        expand("mapped/{sample}.realigned.bam", sample=SAMPLES),
-        expand("mapped/{sample}.realigned.bam.bai", sample=SAMPLES),
-        "qc/multiqc_reads.html",
-        "qc/multiqc_alignments.html"
+        "logs/save/preprocess/done.txt"

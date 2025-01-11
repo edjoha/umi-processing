@@ -1,0 +1,9 @@
+name: bwa
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+#  - picard=3.3.0
+#  - picard=2.26.11
+  - bwa=0.7.17
+  - samtools=1.21

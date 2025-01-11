@@ -11,21 +11,23 @@
 #SBATCH --output=/fast/users/altwassr_c/scratch/slurm_logs/%x.%j.out
 #SBATCH --error=/fast/users/altwassr_c/scratch/slurm_logs/%x.%j.err
 
+echo $(date -u) 'Start variant calling'
 snakemake \
-    --nt \
     --jobs 60 \
-    --cluster-config ~/work/umi-data-processing/config/cluster_config.yaml \
-    --profile=cubi-v1 \
     --keep-going \
     --rerun-incomplete \
-    --restart-times 2 \
-    --use-conda --conda-prefix=/fast/users/altwassr_c/work/conda-envs/
+    --workflow-profile=my_profile \
+    --cluster-config ~/work/umi-data-processing/config/cluster_config.yaml \
+    -p --use-conda --conda-frontend mamba --conda-prefix /data/cephfs-1/work/projects/damm-targetseq/conda \
+    --cores
+    #-r \ ???
+    #--nt \ >>> temp() ignored
+echo $(date -u) 'Finished variant calling'
 
+#write a log file??
 
-    # --printshellcmds \
-    # --until annovar \
-    # --dry-run \
 # --touch \
 # --skip-script-cleanup \
 # --reason \
 
+# --until annovar \

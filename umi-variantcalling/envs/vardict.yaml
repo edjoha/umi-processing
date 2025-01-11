@@ -1,0 +1,6 @@
+name: vardict
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - vardict-java=1.8.3
