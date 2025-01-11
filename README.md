@@ -1,4 +1,4 @@
-- build by Raphael Hablesreiter & Robert Altwasser
+- built by Raphael Hablesreiter & Robert Altwasser
 - modified by Hanna Edler
 
 Latest release v2.3, published on Jan 11, 2025
