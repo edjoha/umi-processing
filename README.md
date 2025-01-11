@@ -5,7 +5,7 @@ Latest release v2.3, published on Jan 11, 2025
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14632260.svg)](https://doi.org/10.5281/zenodo.14632260)
 
-This pipeline was developed to call variants from trageted exome sequencing. It consists of three parts:
+This pipeline was developed to call variants from targeted exome sequencing. It consists of three parts:
 
 1. [Demultiplexing](#Demultiplexing)
 2. [Preprocessing](#Preprocessing)
