@@ -203,7 +203,7 @@ If there are different target files for the samples of the analysis, I recommend
 # Glossary
 
 AML
-: Acute Myeloische Leukemia
+: Acute Myeloid Leukemia
 
 HSC
 : hematopoietic stem cell
