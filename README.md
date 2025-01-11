@@ -11,7 +11,19 @@ This pipeline was developed to call variants from trageted exome sequencing. It 
 2. [Preprocessing](#Preprocessing)
 3. [Variant calling](#Variantcalling)
 
+# Installation
+
+This pipeline was developed for use on the [BIH HPC](https://hpc-docs.cubi.bihealth.org) at [Berlin Institute of Health (BIH)](https://www.bihealth.org/en/).
+
+We used the [Miniforge](https://github.com/conda-forge/miniforge) installer for Conda environment installation.
+
+Only Snakemake ([v8.10](https://snakemake.readthedocs.io/en/v8.10.0/)) needs to be installed in a new Conda environment. All other packages needed, get installed by Snakemake automatically when running the pipeline for the first time (`snakemake -p --use-conda --conda-frontend mamba --conda-prefix --workflow-profile=my_profile --jobs --cores`). It is recommended to define a common directory for all Conda environments of this pipeline `--conda-prefix`.
+
 # Demultiplexing
+
+This is the structure of the Demultiplexing part of the pipeline:
+
+![png](umi-demultiplex/241214_demux_dag.png)
 
 ## Sample sheet
 
@@ -93,19 +105,27 @@ picard  IlluminaBasecallsToFastq B=./{MY_RUN}/Data/Intensities/BaseCalls/ L=1 RS
 
 # Preprocessing
 
+This is the structure of the Preprocessing part of the pipeline:
+
+![png](umi-preprocessing/241225_preprocess_dag.png)
+
 ![rule_prep_filtered.svg](images/umi_prep.svg)
 
-1.  **map_reads1**: The BAM files are converted to FASTQ, and then the FASTQ files are mapped to the genome.
+1.  **map_reads1a,b,c**: The BAM files are converted to FASTQ, and then the FASTQ files are mapped to the genome. [BWA-MEM2](https://github.com/bwa-mem2/bwa-mem2) is used for alignment.
+
+2.  **replace_rg1a,b**: BWA-MEM2 modifies the bam header in an unexpected way. RG header needs to be replaced.
     
-2.  **Group reads**: Sequences are grouped according to their UMI sequence.
+3.  **Group reads**: Sequences are grouped according to their UMI sequence.
     
-3.  **Consensus reads**: PCR can introduce errors, which can be indistinguishable from *real* mutations. Therefor, the reads are grouped by their UMIs, and only the consensus sequences are kept. Here, Consensus reads filters all reads that don't appear *at least three times per UMI*.
+4.  **Consensus reads**: PCR can introduce errors, which can be indistinguishable from *real* mutations. Therefor, the reads are grouped by their UMIs, and only the consensus sequences are kept. Here, Consensus reads filters all reads that don't appear *at least three times per UMI*.
     
-4.  **map_reads2**: Consensus sequences mapped to the genome again.
+5.  **map_reads2a,b,c**: Consensus sequences mapped to the genome again. [BWA-MEM2](https://github.com/bwa-mem2/bwa-mem2) is used for alignment.
+
+6.  **replace_rg2a,b**: BWA-MEM2 modifies the bam header in an unexpected way. RG header needs to be replaced.
     
-5.  **FilterConsensusReads**: Reads can be filtered here according to base quality or consensus error rate.
+7.  **FilterConsensusReads**: Reads can be filtered here according to base quality or consensus error rate.
     
-6.  **local realignment**:
+8.  **local realignment**:
     
     - Around known indels, local realignments are performed. Especially towards the end of reads, "mismatch" is cheaper than gap opening, leading to false positives.
     - genome aligners can only consider each read independently
@@ -114,7 +134,11 @@ picard  IlluminaBasecallsToFastq B=./{MY_RUN}/Data/Intensities/BaseCalls/ L=1 RS
             ![indels_realign.png](images/realign.png)
             ![indels_realign_2.png](images/realign_2.png)
 
-# Variant calling
+# Variantcalling
+
+This is the structure of the Variant calling part of the pipeline:
+
+![png](umi-variantcalling/241225_variantcall_dag.png)
 
 ## vardict:
     - single (end) mode
