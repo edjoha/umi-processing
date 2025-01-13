@@ -107,6 +107,17 @@ This is the structure of the Demultiplexing part of the pipeline:
 
 ![png](umi-demultiplex/241214_demux_dag.png)
 
+Recommendations for ressources:
+
+[Developer´s recommendations](https://support.illumina.com/content/dam/illumina-support/documents/documentation/software_documentation/bcl2fastq/bcl2fastq2-v2-20-software-guide-15051736-03.pdf) for bcl2fastq (rule bcl_to_fastq):
+
+Considerations for Multiple Threads
+When using processing options to assign multiple threads, consider the following information:
+- The most demanding step is the processing step (-p option). Assign this step the most threads.
+- The reading and writing stages are simple and do not need many threads. This consideration is important for a local hard drive. Too many threads cause too many parallel read-write actions and suboptimal performance.
+- Use one thread per CPU core plus some extra. This method prevents CPUs from being idle due to a thread being blocked while waiting for another thread.
+- The number of threads depends on the data. If you specify more writing threads than samples, the extra threads do no work but cost time due to context switching.
+
 # Preprocessing
 
 This is the structure of the Preprocessing part of the pipeline:
