@@ -156,7 +156,7 @@ This is the structure of the Preprocessing part of the pipeline:
 
 ## Recommendations for ressources:
 
-Previous datasets gave an orientation how much `runtime` is needed by `map_reads1` (in v2.1) for which file sizes:
+Previous datasets gave an orientation how much `runtime` is needed by `map_reads1` (in [v2.1](https://github.com/edjoha/umi-processing/releases/tag/v2.1)) for which file sizes:
 
 runtime = -0.78 + 0.39*(unmapped.bam file size), which results in
 
