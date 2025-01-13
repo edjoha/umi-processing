@@ -107,7 +107,7 @@ This is the structure of the Demultiplexing part of the pipeline:
 
 ![png](umi-demultiplex/241214_demux_dag.png)
 
-Recommendations for ressources:
+## Recommendations for ressources:
 
 [Developer´s recommendations](https://support.illumina.com/content/dam/illumina-support/documents/documentation/software_documentation/bcl2fastq/bcl2fastq2-v2-20-software-guide-15051736-03.pdf) for bcl2fastq (rule bcl_to_fastq):
 
