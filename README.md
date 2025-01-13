@@ -109,7 +109,7 @@ This is the structure of the Demultiplexing part of the pipeline:
 
 ## Recommendations for ressources:
 
-[Developer´s recommendations](https://support.illumina.com/content/dam/illumina-support/documents/documentation/software_documentation/bcl2fastq/bcl2fastq2-v2-20-software-guide-15051736-03.pdf) for _bcl2fastq_ (`rule bcl_to_fastq`):
+[Developer´s recommendations for _bcl2fastq_](https://support.illumina.com/content/dam/illumina-support/documents/documentation/software_documentation/bcl2fastq/bcl2fastq2-v2-20-software-guide-15051736-03.pdf)  (`rule basecalls_to_fastq`):
 
 Considerations for Multiple Threads
 When using processing options to assign multiple threads, consider the following information:
@@ -117,6 +117,12 @@ When using processing options to assign multiple threads, consider the following
 - The reading and writing stages are simple and do not need many threads. This consideration is important for a local hard drive. Too many threads cause too many parallel read-write actions and suboptimal performance.
 - Use one thread per CPU core plus some extra. This method prevents CPUs from being idle due to a thread being blocked while waiting for another thread.
 - The number of threads depends on the data. If you specify more writing threads than samples, the extra threads do no work but cost time due to context switching.
+
+Previous datasets gave an orientation how much `runtime` is needed by `fastq_to_bam` for which file sizes:
+
+runtime = 0.027 + 0.16*(FASTQ.GZ file size), which results in
+
+`runtime=lambda wc, input: max(0.3 * input.size_mb/1000)+ "h"`
 
 # Preprocessing
 
@@ -147,6 +153,14 @@ This is the structure of the Preprocessing part of the pipeline:
      
             ![indels_realign.png](images/realign.png)
             ![indels_realign_2.png](images/realign_2.png)
+
+## Recommendations for ressources:
+
+Previous datasets gave an orientation how much `runtime` is needed by `map_reads1` (in v2.1) for which file sizes:
+
+runtime = -0.78 + 0.39*(unmapped.bam file size), which results in
+
+`runtime=lambda wc, input: max(0.6 * input.size_mb/1000)+ "h"`
 
 # Variantcalling
 
